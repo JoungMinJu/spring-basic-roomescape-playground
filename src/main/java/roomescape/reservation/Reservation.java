@@ -1,9 +1,12 @@
 package roomescape.reservation;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import roomescape.theme.Theme;
 import roomescape.eventTime.EventTime;
 
@@ -15,7 +18,12 @@ public class Reservation {
     private Long id;
     private String name;
     private String date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_time_id")
     private EventTime eventTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "theme_id")
     private Theme theme;
 
     public Reservation(Long id, String name, String date, EventTime eventTime, Theme theme) {

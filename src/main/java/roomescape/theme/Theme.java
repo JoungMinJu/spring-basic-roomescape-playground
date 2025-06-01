@@ -13,6 +13,7 @@ public class Theme {
     private Long id;
     private String name;
     private String description;
+    private boolean deleted = false;
 
     public Theme() {
     }
@@ -38,5 +39,8 @@ public class Theme {
 
     public String getDescription() {
         return description;
+    }
+    public boolean isDeleted() {
+        return deleted;
     }
 }
