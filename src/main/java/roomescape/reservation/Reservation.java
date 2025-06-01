@@ -1,27 +1,27 @@
 package roomescape.reservation;
 
 import roomescape.theme.Theme;
-import roomescape.time.Time;
+import roomescape.eventTime.EventTime;
 
 public class Reservation {
     private Long id;
     private String name;
     private String date;
-    private Time time;
+    private EventTime eventTime;
     private Theme theme;
 
-    public Reservation(Long id, String name, String date, Time time, Theme theme) {
+    public Reservation(Long id, String name, String date, EventTime eventTime, Theme theme) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.time = time;
+        this.eventTime = eventTime;
         this.theme = theme;
     }
 
-    public Reservation(String name, String date, Time time, Theme theme) {
+    public Reservation(String name, String date, EventTime eventTime, Theme theme) {
         this.name = name;
         this.date = date;
-        this.time = time;
+        this.eventTime = eventTime;
         this.theme = theme;
     }
 
@@ -41,8 +41,8 @@ public class Reservation {
         return date;
     }
 
-    public Time getTime() {
-        return time;
+    public EventTime getTime() {
+        return eventTime;
     }
 
     public Theme getTheme() {

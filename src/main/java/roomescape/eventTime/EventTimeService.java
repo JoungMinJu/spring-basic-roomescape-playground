@@ -1,4 +1,4 @@
-package roomescape.time;
+package roomescape.eventTime;
 
 import org.springframework.stereotype.Service;
 import roomescape.reservation.Reservation;
@@ -7,20 +7,20 @@ import roomescape.reservation.ReservationDao;
 import java.util.List;
 
 @Service
-public class TimeService {
-    private TimeDao timeDao;
+public class EventTimeService {
+    private EventTimeRepository eventTimeRepository;
     private ReservationDao reservationDao;
 
-    public TimeService(TimeDao timeDao, ReservationDao reservationDao) {
-        this.timeDao = timeDao;
+    public EventTimeService(EventTimeRepository eventTimeRepository, ReservationDao reservationDao) {
+        this.eventTimeRepository = eventTimeRepository;
         this.reservationDao = reservationDao;
     }
 
     public List<AvailableTime> getAvailableTime(String date, Long themeId) {
         List<Reservation> reservations = reservationDao.findByDateAndThemeId(date, themeId);
-        List<Time> times = timeDao.findAll();
+        List<EventTime> eventTimes = eventTimeRepository.findAll();
 
-        return times.stream()
+        return eventTimes.stream()
                 .map(time -> new AvailableTime(
                         time.getId(),
                         time.getValue(),
@@ -30,15 +30,15 @@ public class TimeService {
                 .toList();
     }
 
-    public List<Time> findAll() {
-        return timeDao.findAll();
+    public List<EventTime> findAll() {
+        return eventTimeRepository.findAll();
     }
 
-    public Time save(Time time) {
-        return timeDao.save(time);
+    public EventTime save(EventTime eventTime) {
+        return eventTimeRepository.save(eventTime);
     }
 
     public void deleteById(Long id) {
-        timeDao.deleteById(id);
+        eventTimeRepository.deleteById(id);
     }
 }

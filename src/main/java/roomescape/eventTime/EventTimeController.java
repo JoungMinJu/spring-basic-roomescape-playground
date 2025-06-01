@@ -1,4 +1,4 @@
-package roomescape.time;
+package roomescape.eventTime;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,36 +13,36 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-public class TimeController {
-    private TimeService timeService;
+public class EventTimeController {
+    private EventTimeService eventTimeService;
 
-    public TimeController(TimeService timeService) {
-        this.timeService = timeService;
+    public EventTimeController(EventTimeService eventTimeService) {
+        this.eventTimeService = eventTimeService;
     }
 
     @GetMapping("/times")
-    public List<Time> list() {
-        return timeService.findAll();
+    public List<EventTime> list() {
+        return eventTimeService.findAll();
     }
 
     @PostMapping("/times")
-    public ResponseEntity<Time> create(@RequestBody Time time) {
-        if (time.getValue() == null || time.getValue().isEmpty()) {
+    public ResponseEntity<EventTime> create(@RequestBody EventTime eventTime) {
+        if (eventTime.getValue() == null || eventTime.getValue().isEmpty()) {
             throw new RuntimeException();
         }
 
-        Time newTime = timeService.save(time);
-        return ResponseEntity.created(URI.create("/times/" + newTime.getId())).body(newTime);
+        EventTime newEventTime = eventTimeService.save(eventTime);
+        return ResponseEntity.created(URI.create("/times/" + newEventTime.getId())).body(newEventTime);
     }
 
     @DeleteMapping("/times/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        timeService.deleteById(id);
+        eventTimeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/available-times")
     public ResponseEntity<List<AvailableTime>> availableTimes(@RequestParam String date, @RequestParam Long themeId) {
-        return ResponseEntity.ok(timeService.getAvailableTime(date, themeId));
+        return ResponseEntity.ok(eventTimeService.getAvailableTime(date, themeId));
     }
 }
