@@ -47,7 +47,6 @@ public class DataInitializer implements CommandLineRunner {
         eventTimeRepository.save(new EventTime("18:00"));
         eventTimeRepository.save(new EventTime( "20:00"));
 
-        // 예약은 theme, eventTime 저장 후 조회해서 넣어야 하므로
         var theme1 = themeRepository.findById(1L).orElseThrow();
         var theme2 = themeRepository.findById(2L).orElseThrow();
         var theme3 = themeRepository.findById(3L).orElseThrow();

@@ -42,6 +42,7 @@ public class ReservationService {
             theme
         );
 
+        reservationRepository.save(reservation);
         return new ReservationResponse(reservation.getId(), reservationRequest.getName(), reservation.getTheme().getName(), reservation.getDate(), reservation.getTime().getValue());
     }
 
@@ -53,5 +54,11 @@ public class ReservationService {
         return reservationRepository.findAll().stream()
                 .map(it -> new ReservationResponse(it.getId(), it.getMemberName(), it.getTheme().getName(), it.getDate(), it.getTime().getValue()))
                 .toList();
+    }
+
+    public List<MyReservationResponse> findAllMine(Long memberId) {
+        return reservationRepository.findAllByMemberId(memberId).stream()
+            .map(MyReservationResponse::from)
+            .toList();
     }
 }
