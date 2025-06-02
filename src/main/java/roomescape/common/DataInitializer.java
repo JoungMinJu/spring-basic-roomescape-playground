@@ -31,8 +31,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        memberRepository.save(new Member("어드민", "admin@email.com", "password", "ADMIN"));
-        memberRepository.save(new Member("브라운", "brown@email.com", "password", "USER"));
+        Member admin = new Member("어드민", "admin@email.com", "password", "ADMIN");
+        Member brown = new Member("브라운", "brown@email.com", "password", "USER");
+        memberRepository.save(admin);
+        memberRepository.save(brown);
 
         themeRepository.save(new Theme(null, "테마1", "테마1입니다."));
         themeRepository.save(new Theme(null, "테마2", "테마2입니다."));
@@ -54,8 +56,8 @@ public class DataInitializer implements CommandLineRunner {
         var time2 = eventTimeRepository.findById(2L).orElseThrow();
         var time3 = eventTimeRepository.findById(3L).orElseThrow();
 
-        reservationRepository.save(new Reservation("어드민", "2024-03-01", time1, theme1));
-        reservationRepository.save(new Reservation("어드민", "2024-03-01", time2, theme2));
-        reservationRepository.save(new Reservation("어드민", "2024-03-01", time3, theme3));
+        reservationRepository.save(new Reservation(admin, "2024-03-01", time1, theme1));
+        reservationRepository.save(new Reservation(admin,"2024-03-01", time2, theme2));
+        reservationRepository.save(new Reservation(admin,"2024-03-01", time3, theme3));
     }
 }

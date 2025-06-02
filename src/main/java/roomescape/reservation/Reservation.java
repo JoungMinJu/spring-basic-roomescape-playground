@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import roomescape.member.Member;
 import roomescape.theme.Theme;
 import roomescape.eventTime.EventTime;
 
@@ -16,7 +17,10 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
     private String date;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,16 +30,16 @@ public class Reservation {
     @JoinColumn(name = "theme_id")
     private Theme theme;
 
-    public Reservation(Long id, String name, String date, EventTime eventTime, Theme theme) {
+    public Reservation(Long id, Member member, String date, EventTime eventTime, Theme theme) {
         this.id = id;
-        this.name = name;
+        this.member = member;
         this.date = date;
         this.eventTime = eventTime;
         this.theme = theme;
     }
 
-    public Reservation(String name, String date, EventTime eventTime, Theme theme) {
-        this.name = name;
+    public Reservation(Member member, String date, EventTime eventTime, Theme theme) {
+        this.member = member;
         this.date = date;
         this.eventTime = eventTime;
         this.theme = theme;
@@ -49,8 +53,8 @@ public class Reservation {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getMemberName() {
+        return member.getName();
     }
 
     public String getDate() {

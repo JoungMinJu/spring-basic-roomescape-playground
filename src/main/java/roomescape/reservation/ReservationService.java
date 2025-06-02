@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import roomescape.eventTime.EventTime;
 import roomescape.eventTime.EventTimeRepository;
+import roomescape.member.Member;
+import roomescape.member.MemberRepository;
 import roomescape.theme.Theme;
 import roomescape.theme.ThemeRepository;
 
@@ -14,10 +16,13 @@ public class ReservationService {
     private EventTimeRepository eventTimeRepository;
     private ThemeRepository themeRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, EventTimeRepository eventTimeRepository, ThemeRepository themeRepository) {
+    private MemberRepository memberRepository;
+
+    public ReservationService(ReservationRepository reservationRepository, EventTimeRepository eventTimeRepository, ThemeRepository themeRepository, MemberRepository memberRepository) {
         this.reservationRepository = reservationRepository;
         this.eventTimeRepository = eventTimeRepository;
         this.themeRepository = themeRepository;
+        this.memberRepository = memberRepository;
     }
 
     public ReservationResponse save(ReservationRequest reservationRequest) {
@@ -27,8 +32,11 @@ public class ReservationService {
         Theme theme = themeRepository.findById(reservationRequest.getTheme())
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테마"));
 
+        Member member = memberRepository.findByName(reservationRequest.getName())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원"));
+
         Reservation reservation = new Reservation(
-            reservationRequest.getName(),
+            member,
             reservationRequest.getDate(),
             eventTime,
             theme
@@ -43,7 +51,7 @@ public class ReservationService {
 
     public List<ReservationResponse> findAll() {
         return reservationRepository.findAll().stream()
-                .map(it -> new ReservationResponse(it.getId(), it.getName(), it.getTheme().getName(), it.getDate(), it.getTime().getValue()))
+                .map(it -> new ReservationResponse(it.getId(), it.getMemberName(), it.getTheme().getName(), it.getDate(), it.getTime().getValue()))
                 .toList();
     }
 }
