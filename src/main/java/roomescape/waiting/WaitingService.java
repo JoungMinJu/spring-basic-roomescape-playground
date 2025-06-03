@@ -35,6 +35,12 @@ public class WaitingService {
             .orElseThrow(() -> new IllegalArgumentException("회원 없음"));
 
         Waiting waiting = new Waiting(member, request.getDate(), time, theme);
+
+        boolean alreadyExists = waitingRepository.existsByMemberAndDateAndTimeAndTheme(member, request.getDate(), time, theme);
+        if (alreadyExists) {
+            throw new IllegalStateException("이미 동일한 대기 항목이 존재합니다.");
+        }
+
         waitingRepository.save(waiting);
         return WaitingResponse.from(waiting);
     }
