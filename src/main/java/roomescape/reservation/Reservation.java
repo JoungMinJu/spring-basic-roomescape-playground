@@ -32,8 +32,7 @@ public class Reservation {
     @JoinColumn(name = "theme_id")
     private Theme theme;
 
-    @Enumerated(EnumType.STRING)
-    private ReservationStatus status;
+    private String status = "예약";
 
     public Reservation(Long id, Member member, String date, EventTime eventTime, Theme theme) {
         this.id = id;
@@ -41,7 +40,6 @@ public class Reservation {
         this.date = date;
         this.eventTime = eventTime;
         this.theme = theme;
-        this.status = ReservationStatus.RESERVED;
     }
 
     public Reservation(Member member, String date, EventTime eventTime, Theme theme) {
@@ -49,7 +47,6 @@ public class Reservation {
         this.date = date;
         this.eventTime = eventTime;
         this.theme = theme;
-        this.status = ReservationStatus.RESERVED;
     }
 
     public Reservation() {
@@ -76,7 +73,7 @@ public class Reservation {
         return theme;
     }
 
-    public ReservationStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 }

@@ -27,7 +27,7 @@ public class MyReservationResponse {
             reservation.getTheme().getName(),
             reservation.getDate(),
             reservation.getTime().getValue(),
-            reservation.getStatus().getDisplayName()
+            reservation.getStatus()
         );
     }
 
