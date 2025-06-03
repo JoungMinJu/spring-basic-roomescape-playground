@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class Theme {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
@@ -40,6 +40,7 @@ public class Theme {
     public String getDescription() {
         return description;
     }
+
     public boolean isDeleted() {
         return deleted;
     }
